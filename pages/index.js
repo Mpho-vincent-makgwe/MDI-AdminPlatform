@@ -1,29 +1,26 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useRouter } from "next/router";
 import axios from "axios";
-import UsersCard from "./components/UsersCard";
-import BarChartComponent from "./components/BarChartComponent";
-import PieChartComponent from "./components/PieChartComponent";
+import UsersCard from "@/components/ui/UserCard";
+import BarChartComponent from "@/components/Charts/BarChartComponent";
+import PieChartComponent from "@/components/Charts/PieChartComponent";
 
 const Home = () => {
   const [stats, setStats] = useState({ users: 0, sectors: {} });
-  const navigate = useNavigate();
+  const router = useRouter();
 
   useEffect(() => {
-    axios
-      .get("https://your-mongodb-api.com/stats")
-      .then((response) => setStats(response.data))
-      .catch((error) => console.error("Error fetching data:", error));
+
   }, []);
 
   return (
     <div className="p-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-      <UsersCard users={stats.users} onClick={() => navigate("/users")} />
-      <div onClick={() => navigate("/analysis")} className="cursor-pointer">
-        <BarChartComponent data={stats.sectors} />
+      <UsersCard  onClick={() => router.push("/users")} />
+      <div onClick={() => router.push("/analysis")} className="cursor-pointer">
+        <BarChartComponent  />
       </div>
-      <div onClick={() => navigate("/analysis")} className="cursor-pointer">
-        <PieChartComponent data={stats.sectors} />
+      <div onClick={() => router.push("/analysis")} className="cursor-pointer">
+        <PieChartComponent  />
       </div>
     </div>
   );

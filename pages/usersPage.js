@@ -6,7 +6,7 @@ const UsersPage = () => {
 
   useEffect(() => {
     axios
-      .get("https://your-mongodb-api.com/users")
+      .get("api/users")
       .then((response) => setUsers(response.data))
       .catch((error) => console.error("Error fetching users:", error));
   }, []);

@@ -1,11 +1,12 @@
-import connectDB from "../../utils/connectDB";
+import dbConnect from "../../utils/dbConnect";
 import User from "../../models/User";
+import Job from "../../models/Job";
 
 export default async function handler(req, res) {
-  await connectDB();
+  await dbConnect("MDI-Connect");
 
   const users = await User.countDocuments();
-  const sectors = await User.aggregate([
+  const sectors = await Job.aggregate([
     { $group: { _id: "$sector", count: { $sum: 1 } } }
   ]);
 
@@ -14,3 +15,4 @@ export default async function handler(req, res) {
 
   res.status(200).json({ users, sectors: formattedSectors });
 }
+
